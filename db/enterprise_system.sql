@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 10, 2025 at 08:37 AM
+-- Generation Time: Mar 10, 2025 at 08:51 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.0.28
 
@@ -50,11 +50,23 @@ INSERT INTO `login_logs` (`id`, `user_id`, `login_time`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `tbl_attendance`
+--
+
+CREATE TABLE `tbl_attendance` (
+  `attendance_id` int(10) NOT NULL,
+  `user_id` int(10) DEFAULT NULL,
+  `attendance_date` date DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `users`
 --
 
 CREATE TABLE `users` (
-  `id` int(11) NOT NULL,
+  `id` int(10) NOT NULL,
   `username` varchar(50) NOT NULL,
   `password` varchar(255) NOT NULL,
   `user_type` enum('admin','user') NOT NULL DEFAULT 'user',
@@ -63,14 +75,41 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `users`
+-- Indexes for dumped tables
 --
 
-INSERT INTO `users` (`id`, `username`, `password`, `user_type`, `last_login`, `created_at`) VALUES
-(0, 'admin', '$2y$10$KVaYpRspvlG2ETRD0oO7kOK0aBkSekb61PnAhfr6PTHGMezHQvWU.', 'admin', '2025-02-10 15:35:13', '2025-02-10 07:22:27'),
-(0, 'user', '$2y$10$lyT7ky6bC1nlP0EE2ndJhOUn86sTKKB/QCm3hEH8tLSUfdNwlpcFC', 'user', '2025-02-10 15:35:13', '2025-02-10 07:22:57'),
-(0, 'admin1', '$2y$10$6GUGuz1AXTRw0XOSBQPgxuonx/USeWpgB2bwZrHMOJ/lZQgvF21GG', 'admin', '2025-02-10 15:35:13', '2025-02-10 07:34:27'),
-(0, 'user1', '$2y$10$Q0111XrL8GYFONRrCAcVfO.PXVq2L6MR1peWbVQxXSIWNY1VxmsMe', 'user', '2025-02-10 15:35:13', '2025-02-10 07:35:00');
+--
+-- Indexes for table `tbl_attendance`
+--
+ALTER TABLE `tbl_attendance`
+  ADD PRIMARY KEY (`attendance_id`),
+  ADD KEY `user_id` (`user_id`);
+
+--
+-- Indexes for table `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `tbl_attendance`
+--
+ALTER TABLE `tbl_attendance`
+  ADD CONSTRAINT `tbl_attendance_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
